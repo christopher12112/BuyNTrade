@@ -6,7 +6,3 @@ services:
         image: 'mysql'
         environment:
             MYSQL_ROOT_PASSWORD: changeme
-    postgres:
-        image: 'postgres'
-        environment:
-            POSTGRES_PASSWORD: changeme
