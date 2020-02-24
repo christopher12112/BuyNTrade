@@ -6,7 +6,4 @@ services:
         image: 'mysql'
         environment:
             MYSQL_ROOT_PASSWORD: changeme
- front_end:
-        build: ./Front_end
-        ports:
-            - 5000:5000            
+
