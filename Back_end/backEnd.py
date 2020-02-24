@@ -35,9 +35,7 @@ threads = args.t
 
 pool = ThreadPoolExecutor(threads)
 
-###############################################################################
 ########################### Host Discovery ####################################
-###############################################################################
 
 print(f"Discovering hosts on {interface}...")
 
@@ -90,75 +88,3 @@ if len(active_hosts) == 0:
     print("No active hosts! Is this running on the correct network?")
     sys.exit(1)
 
-###############################################################################
-############################## Service Tests ##################################
-###############################################################################
-
-for ip in active_hosts:
-    if 'RabbitMQ' in active_hosts[ip]:
-        print(f"Performing RabbitMQ tests on {ip}...")
-
-        print("> Checking for ports that shouldn't be open...")
-        valid_ports = [4369, 5672, 15672]
-        portscan = {}
-        for port in range(1, 10000):
-            portscan[port] = pool.submit(tcp_connect, ip, port)
-        wait(portscan.values())
-        for port in portscan:
-            if portscan[port].result() and port not in valid_ports:
-                print(f"> [FAILED] Port {port} is open")
-
-        print("> Checking connection, queue creation, producing, and consuming...")
-        connection = pika.BlockingConnection(pika.ConnectionParameters(ip))
-        channel = connection.channel()
-        channel.queue_declare(queue='test')
-        channel.basic_publish(exchange='', routing_key='test', body='Test Message')
-        connection.close()
-        time.sleep(5)
-        connection = pika.BlockingConnection(pika.ConnectionParameters(ip))
-        channel = connection.channel()
-        method_frame, header_frame, body = channel.basic_get('test')
-        if method_frame:
-            channel.basic_ack(method_frame.delivery_tag)
-            if body != b'Test Message':
-                printf("> [FAILED] Returned message does not match: {body}")
-        else:
-            print("> [FAILED] No message returned")
-        connection.close()
-
-        if tcp_connect(ip, 15672):
-            print("> Management plugin is active, checking that default credentials are not used...")
-            response = requests.get(f'http://{ip}:15672/api/overview',
-                    auth=('guest', 'guest'))
-            if response.status_code != 401:
-                print("> [FAILED] Default credentials (guest / guest) work")
-
-    if 'MySQL/MariaDB' in active_hosts[ip]:
-        print(f"Performing MySQL/MariaDB tests on {ip}...")
-
-        print("> Connecting as 'test' with password 'test' to database 'test'") 
-        try:
-            db = mysql.connect(
-                host     = ip,
-                user     = 'test',
-                passwd   = 'test',
-                database = 'test',
-            )
-            db.close()
-        except mysql.Error as err:
-            print(f"> [FAILED] {err}")
-
-    if 'PostgreSQL' in active_hosts[ip]:
-        print(f"Performing PostgreSQL tests on {ip}...")
-
-        print("> Connecting as 'test' with password 'test' to database 'test'")
-        try:
-            conn = psycopg2.connect(
-                host     = ip,
-                user     = 'test',
-                password = 'test',
-                dbname   = 'test',
-            )
-            conn.close()
-        except psycopg2.Error as err:
-            print(f"> [FAILED] {err}")
