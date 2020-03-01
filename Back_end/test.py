@@ -35,9 +35,7 @@ threads = args.t
 
 pool = ThreadPoolExecutor(threads)
 
-###############################################################################
 ########################### Host Discovery ####################################
-###############################################################################
 
 print(f"Discovering hosts on {interface}...")
 
@@ -90,9 +88,7 @@ if len(active_hosts) == 0:
     print("No active hosts! Is this running on the correct network?")
     sys.exit(1)
 
-###############################################################################
 ############################## Service Tests ##################################
-###############################################################################
 
 for ip in active_hosts:
     if 'RabbitMQ' in active_hosts[ip]:
@@ -136,29 +132,16 @@ for ip in active_hosts:
     if 'MySQL/MariaDB' in active_hosts[ip]:
         print(f"Performing MySQL/MariaDB tests on {ip}...")
 
-        print("> Connecting as 'test' with password 'test' to database 'test'") 
+        print("> Connecting as 'bhanav' with password 'bhanav' to database 'db'") 
         try:
             db = mysql.connect(
-                host     = ip,
-                user     = 'test',
-                passwd   = 'test',
-                database = 'test',
+                host     = localhost,
+                user     = 'bhanav',
+                passwd   = 'bhanav',
+                database = 'db',
             )
             db.close()
         except mysql.Error as err:
             print(f"> [FAILED] {err}")
 
-    if 'PostgreSQL' in active_hosts[ip]:
-        print(f"Performing PostgreSQL tests on {ip}...")
-
-        print("> Connecting as 'test' with password 'test' to database 'test'")
-        try:
-            conn = psycopg2.connect(
-                host     = ip,
-                user     = 'test',
-                password = 'test',
-                dbname   = 'test',
-            )
-            conn.close()
-        except psycopg2.Error as err:
-            print(f"> [FAILED] {err}")
+    
