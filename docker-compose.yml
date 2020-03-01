@@ -1,19 +1,13 @@
 version: '3'
 services:
-    front_end:
-        build: 
-            dockerfile: Dockerfile
-            context: ./Front_end
-        image: front-end-python
-        container_name: my-webServiceImage-Container
-        ports:
-            - 5000:5000
     messaging:
         image: 'rabbitmq:3-management'
     mysql:
         image: 'mysql'
         environment:
-            MYSQL_ROOT_PASSWORD:bhanav
-    back_end:
-        build: ./Back_end
+            MYSQL_ROOT_PASSWORD: bhanav
+    front_end:
+        build: ./front_end
+        ports:
+            - 5000:5000
 
