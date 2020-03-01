@@ -136,29 +136,16 @@ for ip in active_hosts:
     if 'MySQL/MariaDB' in active_hosts[ip]:
         print(f"Performing MySQL/MariaDB tests on {ip}...")
 
-        print("> Connecting as 'test' with password 'test' to database 'test'") 
+        print("> Connecting as 'test' with password 'bhanav' to database 'db'") 
         try:
             db = mysql.connect(
-                host     = ip,
+                host     = localhost,
                 user     = 'test',
-                passwd   = 'test',
-                database = 'test',
+                passwd   = 'bhanav',
+                database = 'db',
             )
             db.close()
         except mysql.Error as err:
             print(f"> [FAILED] {err}")
 
-    if 'PostgreSQL' in active_hosts[ip]:
-        print(f"Performing PostgreSQL tests on {ip}...")
-
-        print("> Connecting as 'test' with password 'test' to database 'test'")
-        try:
-            conn = psycopg2.connect(
-                host     = ip,
-                user     = 'test',
-                password = 'test',
-                dbname   = 'test',
-            )
-            conn.close()
-        except psycopg2.Error as err:
-            print(f"> [FAILED] {err}")
+    
