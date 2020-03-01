@@ -5,6 +5,7 @@ services:
     mysql:
         image: 'mysql'
         environment:
+            MYSQL_USER: bhanav
             MYSQL_ROOT_PASSWORD: bhanav
     front_end:
         build: ./front_end
