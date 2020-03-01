@@ -132,11 +132,11 @@ for ip in active_hosts:
     if 'MySQL/MariaDB' in active_hosts[ip]:
         print(f"Performing MySQL/MariaDB tests on {ip}...")
 
-        print("> Connecting as 'test' with password 'bhanav' to database 'db'") 
+        print("> Connecting as 'bhanav' with password 'bhanav' to database 'db'") 
         try:
             db = mysql.connect(
                 host     = localhost,
-                user     = 'test',
+                user     = 'bhanav',
                 passwd   = 'bhanav',
                 database = 'db',
             )
