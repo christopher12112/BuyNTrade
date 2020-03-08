@@ -28,3 +28,4 @@ class Sender:
             exchange='', routing_key=self.routing_key, body=str(object))
         print(" [x] Data has been Sent RabbitMq")
         self.connection.close()
+        
