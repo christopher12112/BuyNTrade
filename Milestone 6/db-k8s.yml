@@ -1,0 +1,14 @@
+#tag::pv-claims[]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-primary-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 512M
+
+#end::pv-claims[]
