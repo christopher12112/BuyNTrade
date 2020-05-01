@@ -41,3 +41,44 @@ spec:
     - protocol: TCP
       port: 3306
 #end::services[]
+#tag::db-rw-deployment[]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-rw
+  labels:
+    app: db-rw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-rw
+  template:
+    metadata:
+      labels:
+        app: db-rw
+    spec:
+      containers:
+        - name: db-rw
+          image: mysql
+          env: 
+            - name: MYSQL_ROOT_USER
+              value: "root"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "sam@sam"
+            - name: MYSQL_ROOT_USER
+              value: "root"
+            - name: MYSQL_ROOT_PASSWORD
+              value: sam@sam
+            - name: MYSQL_DATABASE
+              value: buytradedb
+            - name: MYSQL_AUTHENTICATION_PLUGIN
+              value: mysql_native_password
+            - name: MYSQL_USER
+              value: sam
+            - name: MYSQL_PASSWORD
+              value: sam@sam
+          
+#end::db-rw-deployment[]
+
