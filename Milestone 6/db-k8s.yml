@@ -12,3 +12,32 @@ spec:
       storage: 512M
 
 #end::pv-claims[]
+#tag::services[]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-rw
+  labels:
+    app: db-rw
+spec:
+  selector:
+    app: db-rw
+  ports:
+    - protocol: TCP
+      port: 3306
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-r
+  labels:
+    app: db-r
+spec:
+  selector:
+    app: db-r
+  ports:
+    - protocol: TCP
+      port: 3306
+#end::services[]
