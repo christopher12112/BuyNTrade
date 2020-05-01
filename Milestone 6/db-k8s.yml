@@ -82,3 +82,48 @@ spec:
           
 #end::db-rw-deployment[]
 
+#tag::db-r-deployment[]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-r
+  labels:
+    app: db-r
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: db-r
+  template:
+    metadata:
+      labels:
+        app: db-r
+    spec:
+     containers:
+        - name: db-r
+          image: mysql
+          env: 
+            - name: MYSQL_ROOT_USER
+              value: "root"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "sam@sam"
+            - name: MYSQL_ROOT_USER
+              value: "root"
+            - name: MYSQL_ROOT_PASSWORD
+              value: sam@sam
+            - name: MYSQL_DATABASE
+              value: buytradedb
+            - name: MYSQL_AUTHENTICATION_PLUGIN
+              value: mysql_native_password
+            - name: MYSQL_USER
+              value: sam
+            - name: MYSQL_PASSWORD
+              value: sam@sam
+          #command: --default-authentication-plugin=mysql_native_password
+#          ports:
+#            - "3300:3306"
+#          links:
+#            - db-rw
+         
+#end::db-r-deployment[]    
