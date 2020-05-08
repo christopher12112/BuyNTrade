@@ -40,6 +40,7 @@ spec:
   ports:
     - protocol: TCP
       port: 3306
+      
 #end::services[]
 #tag::db-rw-deployment[]
 ---
