@@ -130,4 +130,3 @@ spec:
 #          links:
 #            - db-rw
 #end::db-r-deployment[]    
- 
