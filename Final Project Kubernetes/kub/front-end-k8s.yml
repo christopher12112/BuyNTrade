@@ -16,3 +16,21 @@ spec:
       port: 80
       targetPort: 5000
 #end::service[]
+
+#tag::deployment[]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+  labels:
+    app: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      labels:
+        app: front-end
