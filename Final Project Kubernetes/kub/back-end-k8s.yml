@@ -18,6 +18,7 @@ spec:
       nodePort: 32001
 ---
 #end::pv-claims[]
+
 #tag::services[]
 ---
 apiVersion: v1
