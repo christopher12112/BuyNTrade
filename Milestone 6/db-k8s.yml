@@ -122,7 +122,8 @@ spec:
             - name: MYSQL_PASSWORD
               value: sam@sam
           #command: --default-authentication-plugin=mysql_native_password
-          
+      
+      
 #          ports:
 #            - "3300:3306"
 #          links:
