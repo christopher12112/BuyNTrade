@@ -6,23 +6,22 @@ import string
 import random
 
 
-
 class Db():
 
     def __init__(self):
         self.mydb_r = mysql.connector.connect(
-            host="db-rw",
+            host="mysql-read",
             port=3306,
             user="root",
-            passwd="sam@sam",
+            passwd="",
             database="buytradedb"
         )
         self.mycursor_r = self.mydb_r.cursor()
         self.mydb_rw = mysql.connector.connect(
-            host="db-rw",
+            host="mysql-0.mysql",
             port=3306,
             user="root",
-            passwd="sam@sam",
+            passwd="",
             database="buytradedb"
         )
         self.mycursor_rw = self.mydb_rw.cursor()
@@ -64,7 +63,12 @@ class Db():
 
             self.mycursor_r.execute(sql, param)
             self.mydb_r.commit()
-
+            
+            #self.mycursor_rw.close()
+            #self.mydb_rw.close()
+        
+        self.mycursor_r.close()
+        self.mydb_r.close()
         return token
 
     def do_registration(self, object):
@@ -83,7 +87,10 @@ class Db():
         param = (UserName, Email, Password, Address,
                  ContactNo)
 
+        # self.mycursor_rw.execute(sql, param)
         self.mycursor_rw.execute(sql, param)
         self.mydb_rw.commit()
-
+        self.mycursor_rw.close()
+        self.mydb_rw.close()
+        
         return True
