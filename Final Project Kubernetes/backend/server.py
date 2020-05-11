@@ -5,6 +5,7 @@ from flask_cors import CORS
 import sender
 import db
 import receiver
+from crossdomain import crossdomain
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +15,8 @@ def index():
     return 'API Middleware'
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST','OPTIONS'])
+@crossdomain(origin='*')
 def do_login():
     username = request.args.get('username')
     password = request.args.get('password')
@@ -30,7 +32,8 @@ def do_login():
     return '{"status":"ok","message":"'+str(r)+'"}'
 
 
-@app.route('/registration')
+@app.route('/registration', methods=['POST','GET','OPTIONS'])
+@crossdomain(origin='*')
 def do_registration():
     UserName = request.args.get('username')
     Email = request.args.get('email')
@@ -49,6 +52,12 @@ def do_registration():
         return '{"status":"error","message":"This user may already exists"}'
     return '{"status":"ok","message":"User has been registered!"}'
 
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=int("5001"),debug=True)
