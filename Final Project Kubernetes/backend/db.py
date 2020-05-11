@@ -6,6 +6,7 @@ import string
 import random
 
 
+
 class Db():
 
     def __init__(self):
