@@ -10,7 +10,7 @@ class Db():
 
     def __init__(self):
         self.mydb_r = mysql.connector.connect(
-            host="db-r",
+            host="db-rw",
             port=3306,
             user="root",
             passwd="sam@sam",
