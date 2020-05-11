@@ -43,12 +43,11 @@ function do_registration() {
   let username = document.getElementById("rUsername").value;
   let password = document.getElementById("rPassword").value;
   let errorDiv = "rError";
-  console.log(document.getElementById(errorDiv))
+
   if (username != "" && password != "") {
     $.post(
       `http://localhost:8080/api/v1/namespaces/default/services/back-end:5001/proxy/registration?username=${username}&password=${password}&email=&address=&contactNo=0`,
       function(data) {
-		  console.log(res)
 		  console.log(data)
         let res = JSON.parse(data);
 		
