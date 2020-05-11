@@ -109,16 +109,16 @@ spec:
             #  value: rabbit@$(MY_POD_NAME).rabbitmq.default.svc.cluster.local
             #- name: RABBITMQ_ERLANG_COOKIE
             #  value: "changeme"
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/rabbitmq
-      volumes:
-        - name: config-volume
-          configMap:
-            name: rabbitmq-config
-            items:
-              - key: rabbitmq.conf
-                path: rabbitmq.conf
-              - key: enabled_plugins
-                path: enabled_plugins
+          #volumeMounts:
+          #  - name: config-volume
+          #    mountPath: /etc/rabbitmq
+      #volumes:
+      #  - name: config-volume
+      #    configMap:
+      #      name: rabbitmq-config
+      #      items:
+      #        - key: rabbitmq.conf
+      #          path: rabbitmq.conf
+      #        - key: enabled_plugins
+      #          path: enabled_plugins
 #end::statefulset[]
