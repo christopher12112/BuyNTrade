@@ -1,0 +1,19 @@
+
+Readme file 
+
+	$ minikube start --extra-config apiserver.cors-allowed-origins=["http://*"]
+	$ & minikube -p minikube docker-env | Invoke-Expression
+	$ minikube docker-env | Invoke-Expression
+	$ docker build -t front-end:v1 ./front-end 
+	$ docker build -t back-end:v1 .
+	$ kubectl create configmap initdb-config --from-file initdb.sql 
+	$ kubectl apply -f .
+	$ kubectl.exe proxy --port=8080 (in a seprate powershell this command needs to executed and keep it open )
+	$ minikube service front-end  
+	
+	
+To check provided username/password is there in database, login to any mysql pod and
+
+$ mysql -u root
+$use buytradedb;
+$select * from user;
