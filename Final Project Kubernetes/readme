@@ -1,14 +1,21 @@
-
 Readme file 
 
+While accesing front end, we were getting CORS error"No 'Access-Control-Allow-Origin' header is present on the requested resource."
+In order to fix that issue we had to run minikube with extra config. as shown below  
 	$ minikube start --extra-config apiserver.cors-allowed-origins=["http://*"]
 	$ & minikube -p minikube docker-env | Invoke-Expression
 	$ minikube docker-env | Invoke-Expression
 	$ docker build -t front-end:v1 ./front-end 
 	$ docker build -t back-end:v1 .
+
+To create, user and token table in database, We have configured configmap. In order to run it we need to run below command.  
 	$ kubectl create configmap initdb-config --from-file initdb.sql 
 	$ kubectl apply -f .
+
+We were not able to connect to backend from frontend since it was having proxy error and were getting 500 error code. 
+due to this reason we had to start a proxy server using below coomand.
 	$ kubectl.exe proxy --port=8080 (in a seprate powershell this command needs to executed and keep it open )
+	
 	$ minikube service front-end  
 	
 	
